@@ -17,9 +17,11 @@ if (line.includes("\n") || line.length > 200) {
 }
 
 // Output goes to the directory the make.fun harness provides.
+// MAKEFUN_OUTPUT_DIR wins: in the grader MAKEFUN_BOT_DIR points at the
+// read-only repo (/bot), so writing there dies with EACCES.
 const outputDir =
-  process.env.MAKEFUN_BOT_DIR ??
   process.env.MAKEFUN_OUTPUT_DIR ??
+  process.env.MAKEFUN_BOT_DIR ??
   join(here, "output");
 
 mkdirSync(outputDir, { recursive: true });
